@@ -3,6 +3,8 @@
 A complete e-commerce front end in plain HTML, CSS and JavaScript. No framework, no build step, no backend:
 drop it on any static hosting and swap the product data for your API.
 
+![Screenshot](docs/screenshot.jpg)
+
 **Live demo:** https://tigran-ohanyan.github.io/storefront-ui/
 
 ## Features
