@@ -148,7 +148,7 @@ select { background: var(--surface); border: 1px solid var(--line); border-radiu
 
 /* checkout */
 .checkout-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-.checkout-form fieldset { border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem 1.1rem; margin: 0; display: grid; gap: 0.75rem; }
+.checkout-form fieldset { border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem 1.1rem; margin: 0; display: grid; gap: 0.75rem; align-content: start; }
 .checkout-form legend { font-weight: 700; padding: 0 0.4rem; }
 .checkout-form label { display: grid; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; }
 .checkout-form input, .checkout-form select { border: 1px solid var(--line); border-radius: 10px; padding: 0.6rem 0.75rem; background: var(--bg); font-weight: 500; }
