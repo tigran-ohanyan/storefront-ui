@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nordic Goods — home essentials</title>
+  <meta name="description" content="Storefront UI demo: catalog with filters, quick view, cart drawer and checkout. Static HTML, CSS and JavaScript.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f172a'/><text x='32' y='42' font-size='30' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23f5d0a9'>N</text></svg>">
+</head>
+<body>
+  <a class="skip-link" href="#catalog">Skip to catalog</a>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="#">Nordic<span>Goods</span></a>
+      <form class="search" role="search" id="search-form">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="search" type="search" placeholder="Search products…" autocomplete="off" aria-label="Search products">
+      </form>
+      <button class="cart-btn" id="cart-open" aria-label="Open cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 8h-12z"/><path d="M6 6 5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+        <span class="cart-count" id="cart-count" hidden>0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <p class="eyebrow">New season</p>
+          <h1>Calm objects for a quieter home</h1>
+          <p class="lead">Ceramics, textiles and lighting made by small workshops. Free shipping over $80.</p>
+          <a href="#catalog" class="btn">Shop the collection</a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalog" class="container catalog">
+      <div class="toolbar">
+        <div class="chips" id="categories" role="tablist" aria-label="Categories"></div>
+        <div class="toolbar-right">
+          <label class="range">
+            <span>Up to <strong id="price-label">$200</strong></span>
+            <input type="range" id="price" min="10" max="200" step="5" value="200">
+          </label>
+          <select id="sort" aria-label="Sort products">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+            <option value="rating">Top rated</option>
+            <option value="name">Name A–Z</option>
+          </select>
+        </div>
+      </div>
+      <p class="result-count" id="result-count" aria-live="polite"></p>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty" hidden>
+        <p>Nothing matches your filters.</p>
+        <button class="btn btn-ghost" id="reset-filters">Reset filters</button>
+      </div>
+    </section>
+
+    <section class="container perks">
+      <div><strong>Free shipping</strong><span>on orders over $80</span></div>
+      <div><strong>30-day returns</strong><span>no questions asked</span></div>
+      <div><strong>Made to last</strong><span>natural materials, repairable</span></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Nordic Goods. Demo storefront, no real orders are placed.</span>
+      <a href="https://github.com/tigran-ohanyan/storefront-ui" target="_blank" rel="noopener">Source code</a>
+    </div>
+  </footer>
+
+  <!-- quick view -->
+  <div class="modal" id="product-modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="icon-btn modal-close" data-close aria-label="Close">✕</button>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- cart drawer -->
+  <div class="drawer" id="cart" hidden>
+    <div class="modal-backdrop" data-close-cart></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+      <header class="drawer-head">
+        <h2 id="cart-title">Your cart</h2>
+        <button class="icon-btn" data-close-cart aria-label="Close cart">✕</button>
+      </header>
+      <div class="drawer-body" id="cart-items"></div>
+      <footer class="drawer-foot" id="cart-foot">
+        <form class="promo" id="promo-form">
+          <input type="text" id="promo" placeholder="Promo code" aria-label="Promo code">
+          <button type="submit" class="btn btn-ghost btn-small">Apply</button>
+        </form>
+        <p class="promo-note" id="promo-note"></p>
+        <dl class="totals">
+          <div><dt>Subtotal</dt><dd id="subtotal">$0.00</dd></div>
+          <div id="discount-row" hidden><dt>Discount</dt><dd id="discount">−$0.00</dd></div>
+          <div><dt>Shipping</dt><dd id="shipping">$0.00</dd></div>
+          <div class="total"><dt>Total</dt><dd id="total">$0.00</dd></div>
+        </dl>
+        <button class="btn btn-block" id="checkout-open">Checkout</button>
+      </footer>
+    </aside>
+  </div>
+
+  <!-- checkout -->
+  <div class="modal" id="checkout-modal" hidden>
+    <div class="modal-backdrop" data-close-checkout></div>
+    <div class="modal-dialog modal-dialog-wide" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+      <button class="icon-btn modal-close" data-close-checkout aria-label="Close">✕</button>
+      <div id="checkout-body">
+        <h2 id="checkout-title">Checkout</h2>
+        <form id="checkout-form" class="checkout-form" novalidate>
+          <fieldset>
+            <legend>Contact</legend>
+            <label>Full name<input name="name" required autocomplete="name"></label>
+            <label>Email<input name="email" type="email" required autocomplete="email"></label>
+          </fieldset>
+          <fieldset>
+            <legend>Shipping address</legend>
+            <label>Street<input name="street" required autocomplete="street-address"></label>
+            <div class="row">
+              <label>City<input name="city" required autocomplete="address-level2"></label>
+              <label>ZIP<input name="zip" required autocomplete="postal-code" inputmode="numeric"></label>
+            </div>
+            <label>Country
+              <select name="country" required>
+                <option value="">Choose…</option>
+                <option>Germany</option><option>Netherlands</option><option>Sweden</option><option>United Kingdom</option><option>United States</option>
+              </select>
+            </label>
+          </fieldset>
+          <fieldset>
+            <legend>Payment</legend>
+            <p class="muted small">Demo only. No card data is sent anywhere; use any digits.</p>
+            <label>Card number<input name="card" required inputmode="numeric" placeholder="4242 4242 4242 4242" maxlength="19"></label>
+            <div class="row">
+              <label>Expiry<input name="expiry" required placeholder="MM/YY" maxlength="5"></label>
+              <label>CVC<input name="cvc" required inputmode="numeric" maxlength="4"></label>
+            </div>
+          </fieldset>
+          <aside class="order-summary" id="order-summary"></aside>
+          <button class="btn btn-block" type="submit">Place order</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
